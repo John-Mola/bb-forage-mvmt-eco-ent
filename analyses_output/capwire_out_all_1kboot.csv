@@ -1,0 +1,10 @@
+dataset,subset,ml.colony.num,CI.lower,CI.upper
+vsw,all,413,406.975,539
+bsw18,all,975,816.975,1535
+bsw15,all,1007,712,2175
+vsw,forest,205,183.975,323.025
+vsw,meadow,298,267.975,453
+bsw18,forest,560,423,1037
+bsw18,meadow,516,356.975,1088
+bsw15,forest,235,84,5000
+bsw15,meadow,838,528,2496

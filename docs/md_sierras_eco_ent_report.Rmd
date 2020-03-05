@@ -1,0 +1,218 @@
+---
+title: "Forests do not limit bumble bee foraging movements in a montane meadow complex"
+author: "John M. Mola, Michael R. Miller, Sean M. O'Rourke, Neal M. Williams"
+date: "3/4/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+```{r packages}
+library(tidyverse)
+library(tiff)
+library(grid)
+library(kableExtra)
+```
+
+```{r source files, include=FALSE}
+
+sra_caps <- read_csv("../data_raw/sra_captures_post_COLONY.csv")
+
+capwire_table <- read_csv("../analyses_output/capwire_out_all_1kboot.csv")
+recap_table <- read_rds("../analyses_output/recap_table.rds")
+
+file_names=as.list(dir(pattern="*.Rdata", path = "../analyses_output/", full.names = TRUE))
+lapply(file_names,load,.GlobalEnv, verbose = FALSE)
+
+```
+
+# Purpose
+
+The purpose of this document is to display all results needed for the manuscript in one location. Assuming the user has run all previous scripts in the "analyses" directory, this markdown should render the figures, statistical summaries, and tables needed to review the data analysis portions of the manuscript. 
+
+Please let me know if you have any questions by contacting me at jmola@usgs.gov
+
+# Table 1
+
+```{r table1}
+# number of individuals
+
+sra_caps %>% 
+  group_by(species, year) %>% 
+  tally()
+
+# number of raw colonies
+
+sra_caps %>% 
+  group_by(species, year) %>% 
+  distinct(ClusterIndex) %>% 
+  tally()
+
+# Capwire results
+capwire_table
+
+
+
+```
+
+
+```{r colony abundance table}
+# 
+# colony_abundance_df <- capwire.data %>% 
+#   inner_join(., vegan.ace.data) %>% 
+#   rename(species = dataset, habitat = subset, raw_count = S.obs, ACE_estimate = S.ACE, ACE_se = se.ACE, Capwire_estimate = ml.colony.num, Capwire_lowCI = CI.lower, Capwire_highCI = CI.upper) %>% 
+#   inner_join(., raw_caps_summary) %>% 
+#   mutate(prop_detected_ACE = (raw_count/ACE_estimate)*100, prop_detected_Capwire = (raw_count/Capwire_estimate)*100) %>% 
+#   select(species, habitat, Nind, raw_count, ACE_estimate, ACE_se, prop_detected_ACE, Capwire_estimate, Capwire_lowCI, Capwire_highCI, prop_detected_Capwire) %>% 
+#   arrange(species) %>% 
+#   mutate_if(is.numeric, ~round(., 2)) %>% 
+#   mutate(year = case_when(
+#     species == "bsw15" ~ "2015",
+#     species == "bsw18" ~ "2018",
+#     species == "vsw" ~ "2015"),
+#     species = case_when(
+#     species == "bsw15" ~ "B. bifarius",
+#     species == "bsw18" ~ "B. bifarius",
+#     species == "vsw" ~ "B. vosnesenskii")) %>% 
+#   select(species, year, habitat, Nind, raw_count, ACE_estimate, ACE_se, prop_detected_ACE, Capwire_estimate, Capwire_lowCI, Capwire_highCI, prop_detected_Capwire)
+# 
+# 
+# kable(colony_abundance_df, col.names = c("Species","Year","Habitat", "Nind", "Raw Colonies", "Estimate", "SE", "% Detected", "ML Estimate", "95% CI Low", "95% CI High", "% Detected")) %>% 
+#   kable_styling("basic", full_width = F) %>%
+#   row_spec(0, angle = 0, align = "center") %>%
+#   add_header_above(c(" " = 5, "ACE from vegan package" = 3, "TIRM from Capwire package" = 4)) %>% 
+#   collapse_rows(valign = "top")
+```
+
+Individually tagged and recaptured bees:
+```{r recaps}
+recap_table
+```
+
+
+## Figures 1 and 2 created in QGIS and Powerpoint
+
+# Figure 3
+### And associated statistics
+
+```{r figure3}
+grid.raster(readTIFF("../figures/figure3.tiff"))
+
+```
+
+Sibling separation distances
+```{r}
+sib_sep_summary_table
+```
+
+Sibling separation Wilcoxon test
+```{r}
+sib_sep_wilcox
+```
+
+Colony-specific foraging distances
+```{r}
+col_dist_summary_table
+```
+
+Colony-specific foraging distance Wilcoxon test
+```{r}
+col_dist_wilcox
+```
+
+Relative frequency models summary
+```{r}
+rel_freq_stats_summary
+```
+
+Area-adjusted models summary
+```{r}
+area_adj_stats_summary
+```
+
+***
+
+# Figure 4
+### And associated statistics
+
+```{r figure4}
+grid.raster(readTIFF("../figures/figure4.tiff"))
+```
+
+Sibling plant usage model summary
+```{r}
+sib_usage_stats_summary
+```
+
+Sibling plant usgae model summary for vosnesenskii only
+```{r}
+sib_usage_vos_stats_summary
+```
+
+Sibling plant usage, restricted to within 3 days, summary
+```{r}
+sib_usage_3day_summary
+#NB: please see the 02d script for the output of using 1 through 20 days
+```
+
+
+# Figure 5
+### And associated statistics
+
+```{r figure5}
+grid.raster(readTIFF("../figures/figure5.tiff"))
+```
+
+Observed numbers of colonies detected in forest and meadow
+```{r}
+observed_crossings
+```
+
+Summary of randomized crossings
+```{r}
+randomized_crossings
+```
+
+
+# Figure 6
+### And associated statistics
+
+```{r figure6}
+grid.raster(readTIFF("../figures/figure6.tiff"))
+```
+
+Summary of jaccard dissimilarity model for vosnesenskii
+```{r}
+nmds_dist_vos_summary
+```
+
+Summary of jaccard dissimilarity model for bifarius
+```{r}
+nmds_dist_bif_summary
+```
+
+Summary of jaccard dissimilarity model with interaction for vosnesenskii
+```{r}
+nmds_dist_vos_int_summary
+```
+
+Summary of jaccard dissimilarity model with interaction for bifarius
+```{r}
+nmds_dist_bif_int_summary
+```
+
+
+
+# Supplemental Figure 
+
+```{r figureS1}
+grid.raster(readTIFF("../figures/supplemental_figure.tiff"))
+```
+
+Subsampling summary table
+```{r}
+subsample_summary
+```
+
