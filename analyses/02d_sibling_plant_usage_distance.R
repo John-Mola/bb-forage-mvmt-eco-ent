@@ -135,7 +135,7 @@ sep_plants_p1 <- sib_sep_combo %>%
   scale_fill_manual(values = c(bif18_color, vos_color), labels = c("B. bifarius", "B. vosnesenskii")) +
   theme_classic() +
   labs(x = "", y = "Probability two siblings were \n captured on different floral species") +
-  theme(legend.position = c(0.8, 0.3), legend.title = element_blank(), legend.text = element_text(face = "italic"))
+  theme(legend.position = c(0.77, 0.4), legend.title = element_blank(), legend.text = element_text(face = "italic", size = 12))
 
 #sep_plants_p1
 
