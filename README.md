@@ -1,6 +1,6 @@
-# Bumble bee foraging movements in montane meadow complex
+# Bumble bee foraging movements in a montane meadow complex
 
-![]("./graphical_abstract.png")
+<img src="./graphical_abstract.png">
 
 This repository is intended to document the code behind the project "Forests do not limit bumble bee foraging movements in a montane meadow complex". As of now this manuscript is in revision at Ecological Entomology. 
 
