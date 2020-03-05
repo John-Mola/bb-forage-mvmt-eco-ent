@@ -70,4 +70,4 @@ list_all = namedList(vsw15, bsw15, bsw18)
 # run capwire with a maximum population size of 5000 and 95%CI from 1000 bootstraps (spoke with package developer and he said 10000 unlikely to give any better result and it takes fooorrreevveerrr)
 capwire_out_all <- list_colony_counter(list_all,5000,1000) ; beepr::beep(sound="mario") 
 
-write_csv(capwire_out_all, "./submission_clean/analyses_output/capwire_out_all_1kboot.csv")
+write_csv(capwire_out_all, "./analyses_output/capwire_out_all_1kboot.csv")

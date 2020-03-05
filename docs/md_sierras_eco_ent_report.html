@@ -390,18 +390,12 @@ summary {
 ## 1 bifarius      2015   148
 ## 2 bifarius      2018   207
 ## 3 vosnesenskii  2015   192</code></pre>
-<pre><code>## # A tibble: 9 x 5
-##   dataset subset ml.colony.num CI.lower CI.upper
-##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1 vsw     all              413     407.     539 
-## 2 bsw18   all              975     817.    1535 
-## 3 bsw15   all             1007     712     2175 
-## 4 vsw     forest           205     184.     323.
-## 5 vsw     meadow           298     268.     453 
-## 6 bsw18   forest           560     423     1037 
-## 7 bsw18   meadow           516     357.    1088 
-## 8 bsw15   forest           235      84     5000 
-## 9 bsw15   meadow           838     528     2496</code></pre>
+<pre><code>## # A tibble: 3 x 4
+##   df.name ml.colony.num CI.lower CI.upper
+##   &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 vsw15             413      406      539
+## 2 bsw15            1007      712     2175
+## 3 bsw18             975      816     1535</code></pre>
 <p>Individually tagged and recaptured bees:</p>
 <pre><code>## # A tibble: 11 x 3
 ##    site.1 site.2 distance
