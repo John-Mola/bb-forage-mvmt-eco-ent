@@ -23,7 +23,9 @@ geno_bees = vsw_col %>%
   select(unique.ID, lon, lat, bee.tag, site, date, plant.capture)
 
 # match the two dataframes together and calculate the distance between the original observation and the recaptured location
-recap_matched = inner_join(geno_bees, recap_bees, by = c("bee.tag"="recap.ID"), suffix=c(".1", ".2")) %>% mutate(distance = sqrt((lon.1 - lon.2)^2+(lat.1 - lat.2)^2))
+recap_matched <- 
+  inner_join(geno_bees, recap_bees, by = c("bee.tag"="recap.ID"), suffix=c(".1", ".2")) %>% 
+  mutate(distance = sqrt((lon.1 - lon.2)^2+(lat.1 - lat.2)^2))
 
 
 

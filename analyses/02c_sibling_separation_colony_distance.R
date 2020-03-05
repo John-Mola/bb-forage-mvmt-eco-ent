@@ -65,6 +65,7 @@ vsw_15 <- filter(sra_cap, species == "vosnesenskii") %>%
   rename(x=lon,y=lat)
 
 # CALCULATING ALL POSSIBLE PAIRWISE DISTANCEs
+# this chunk creates a column and then joins it to itself and calculates all of the distances between every observation
 pairs_poss_15_incomplete = vsw_15 %>% 
   mutate(k=1) %>% 
   full_join(.,., by = "k") %>% 
