@@ -11,6 +11,7 @@
 library(tidyverse)
 library(cowplot)
 library(lme4)
+#library(patchwork)
 
 # CUSTOM STUFF ------------------------------------------------------------
 
@@ -126,7 +127,7 @@ sep_plants_p1 <- sib_sep_combo %>%
   filter(distance < 1000) %>% 
   ggplot(., aes(x = distance, y = diff_plant, color = species, fill = species)) +
   #geom_jitter(alpha = 0.7, shape = 21, color = "black", width = 0, height = 0.05) +
-  geom_point(alpha = 0.4, shape = 21, color = "black", position=ggstance::position_dodgev(height=0.1)) +
+  geom_point(alpha = 0.4, shape = 21, color = "black", position=ggstance::position_dodgev(height=0.1), size = 2.5) +
   geom_smooth(method = "glm", 
               method.args = list(family = "binomial"), 
               se = FALSE) +
@@ -141,7 +142,7 @@ sep_plants_p1 <- sib_sep_combo %>%
 sep_plants_p2 <- sib_sep_combo %>% 
   filter(species == "vosnesenskii") %>% 
   ggplot(., aes(x = distance, y = diff_plant, color = species, fill = species)) +
-  geom_point(alpha = 0.4, shape = 21, color = "black") +
+  geom_point(alpha = 0.4, shape = 21, color = "black", size = 2.5) +
   geom_smooth(method = "glm", 
               method.args = list(family = "binomial"), 
               se = FALSE) +
@@ -157,7 +158,7 @@ sep_plot_left <- ggdraw(add_sub(plot_grid(sep_plants_p1, sep_plants_p2, rel_widt
 
 sep_plot_left
 
-ggsave2("./figures/figure4.tiff", plot = sep_plot_left, width = 9, height = 4, dpi = 600)
+ggsave2("./figures/figure4.tiff", plot = sep_plot_left, width = 8, height = 3.5, dpi = 600)
 
 
 # REPEATING THE ANALYSIS WITHIN DAYS --------------------------------------

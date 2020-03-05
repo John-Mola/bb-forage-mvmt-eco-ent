@@ -217,7 +217,7 @@ habs_plot <- ggplot() +
 
 habs_plot
 
-ggsave2("./figures/figure5.tiff", habs_plot, width = 4, height = 3.5, dpi = 600)
+ggsave2("./figures/figure5.tiff", habs_plot, width = 3, height = 3, dpi = 600)
 
 
 # SUMMARY STATS -----------------------------------------------------------

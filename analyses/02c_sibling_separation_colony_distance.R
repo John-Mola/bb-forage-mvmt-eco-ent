@@ -14,6 +14,7 @@
 library(tidyverse)
 library(cowplot)
 library(lme4)
+library(patchwork)
 
 
 # CUSTOM FUNCTIONS --------------------------------------------------------
@@ -346,8 +347,9 @@ combined_sib_dist <- bind_rows(select(pairs_obs_15, distance, species), select(p
 col_distance_plot <- ggplot(combined_col_dist, aes(x = species, y = col.ctr.dist, fill = species)) +
   #geom_violin() +
   geom_boxplot(outlier.alpha = 0) +
-  geom_jitter(alpha = 0.7, shape = 21, color = "black") +
+  geom_jitter(alpha = 0.7, shape = 21, color = "black", size = 2.5) +
   scale_fill_manual(labels = c("B. bifarius", "B. vosnesenskii"), values = c(bif18_color, vos_color)) +
+  scale_x_discrete(labels = c("bifarius" = "B. bifarius", "vosnesenskii" = "B. vosnesenskii")) +
   #geom_hline(yintercept = 362) +
   labs(x = "Species", y = "Colony-specific foraging distance (m)", fill = "") +
   theme_classic() +
@@ -369,21 +371,19 @@ combined_annulus <- bind_rows(bsw_combined_annulus, vos_annulus)
 
 
 # Relative distances
-combined_rel_sib_plot <- ggplot(data=combined_annulus, aes(x=r1, y=nm)) + 
-  geom_point(aes(fill = species), shape = 21, color = "black") + 
-  #geom_smooth(color="black", se = F, method="lm", formula = y ~ exp(x), size = 0.5) +
-  #geom_smooth(method="glm", method.args=list(family=binomial(link="log"))) +
-  geom_path(data = predicted_data_bsw, aes(x = r1, y = y), color = bif18_color) +
-  geom_path(data = predicted_data_vsw, aes(x = r1, y = y), color = vos_color) +
+combined_rel_sib_plot <- ggplot(data = combined_annulus, aes(x = r1, y = nm)) +
+  geom_path(data = predicted_data_bsw, aes(x = r1, y = y), color = bif18_color, size = 1) +
+  geom_path(data = predicted_data_vsw, aes(x = r1, y = y), color = vos_color, size = 1) +
+  geom_point(aes(fill = species), shape = 21, color = "black", size = 2.5, alpha = 0.7) +
   scale_fill_manual(labels = c("B. bifarius", "B. vosnesenskii"), values = c(bif18_color, vos_color)) +
   theme_classic() +
   labs(x = "", y = "\n Relative frequency") +
-  theme(legend.position = c(0.8, 0.7), legend.background = element_rect(color = "black"), legend.title = element_blank(), legend.text = element_text(face = "italic"), axis.text.x = element_blank(), axis.text.y = element_text(size = 10)) +
+  theme(legend.position = c(0.8, 0.7), legend.background = element_rect(color = "black"), legend.title = element_blank(), legend.text = element_text(face = "italic", size = 11), axis.text.x = element_blank(), axis.text.y = element_text(size = 10)) +
   coord_cartesian(xlim = c(0, 5000))
 
 # Sivakoff distance
 combined_area_adjust_plot <- ggplot(data=combined_annulus, aes(x=r1, y=sum_fi)) + 
-  geom_point(shape = 21, color = "black", aes(fill = species)) + 
+  geom_point(shape = 21, color = "black", aes(fill = species), size = 2.5, alpha = 0.7) + 
   #geom_path(data = predicted_bsw_sivakoff, aes(x = r1, y = y), color = bif18_color) +
   scale_fill_manual(labels = c("B. bifarius", "B. vosnesenskii"), values = c(bif18_color, vos_color)) +
   theme_classic() +
@@ -392,14 +392,18 @@ combined_area_adjust_plot <- ggplot(data=combined_annulus, aes(x=r1, y=sum_fi)) 
   coord_cartesian(xlim = c(0, 5000))
 
 
-left_plots <- plot_grid(combined_rel_sib_plot, combined_area_adjust_plot, ncol = 1, labels = c("A", "B"))
+# left_plots <- plot_grid(combined_rel_sib_plot, combined_area_adjust_plot, ncol = 1, labels = c("A", "B"))
 
-distance_grid <- plot_grid(left_plots, col_distance_plot, rel_widths = c(2,1), scale = c(1,1), labels = c("", "C"))
+left_plots <- combined_rel_sib_plot / combined_area_adjust_plot + plot_annotation(tag_levels = 'A')
+
+# distance_grid <- plot_grid(left_plots, col_distance_plot, rel_widths = c(2,1), scale = c(1,1), labels = c("", "C"))
+
+distance_grid <- (left_plots | col_distance_plot) + plot_layout(widths = c(2,1)) + plot_annotation(tag_levels = 'A') & theme(axis.title = element_text(size = 13)) 
 
 # the used figure 
 distance_grid
 
-ggsave2(filename = "./figures/figure3.tiff", plot = distance_grid, width = 9, height = 5, dpi = 600)
+ggsave2(filename = "./figures/figure3.tiff", plot = distance_grid, width = 8, height = 4.5, dpi = 600)
 
 
 # OUTPUT ASSOCIATED STATS -------------------------------------------------------

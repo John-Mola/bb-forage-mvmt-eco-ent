@@ -90,12 +90,12 @@ nmds.dis.distance <- inner_join(nmds.distance, vsw_dissim, by = c("site.x" = "si
 
 nmds_plot <- nmds.dis.distance %>% 
   ggplot(., aes(x = dist, y = dis.distance)) +
-  geom_point(shape = 21, color = "black", aes(fill = hab.cross)) +
+  geom_point(shape = 21, color = "black", aes(fill = hab.cross), alpha = 0.7, size = 2.5) +
   geom_smooth(method = "lm", color = "black", size = 0.5, se = F) +
   theme_classic() +
   scale_fill_viridis_d(option = "A", labels = c("Different", "Same")) +
   labs(x ="", y = "Jaccard dissimilarity index", fill = "Vegetation type \n between sites", title = "B. vosnesenskii") +
-  theme(legend.position = "none", plot.title = element_text(face = "italic"), axis.text.x = element_blank())
+  theme(legend.position = c(0.73, 0.3), legend.background = element_rect(color = "black"), plot.title = element_text(face = "italic"), axis.text.x = element_blank())
 
 
 
@@ -204,13 +204,13 @@ bif_dissim <- bind_rows(bsw15_nmds.dis.distance, bsw.dis.distance) %>%
 
 nmds_plot_bsw <- bif_dissim %>% 
   ggplot(., aes(x = dist, y = dis.distance)) +
-  geom_point(shape = 21, color = "black", aes(fill = hab.cross)) +
+  geom_point(shape = 21, color = "black", aes(fill = hab.cross), alpha = 0.7, size = 2.5) +
   #geom_jitter(shape = 21, color = "black", width= 0.5) +
   #geom_smooth(method = "lm", color = "black", size = 0.5, se = F) +
   theme_classic() +
   scale_fill_viridis_d(option = "A", labels = c("Heterogenous", "Homogenous")) +
   labs(x ="Linear distance between sites (m)", y = "Jaccard dissimilarity index", fill = "Vegetation type \n between sites", title = "B. bifarius") +
-  theme(legend.position = c(0.8, 0.2), legend.background = element_rect(color = "black"), plot.title = element_text(face = "italic"))
+  theme(plot.title = element_text(face = "italic"), legend.position = "none")
 
 nmds_plot_bsw
 
@@ -220,7 +220,7 @@ nmds_plot_combined <- plot_grid(nmds_plot +
   coord_cartesian(xlim = c(100, 800), ylim = c(0.5, 1)), nrow = 2, labels = c("A", "B"), rel_heights = c(0.95, 1))
 
 nmds_plot_combined
-ggsave("./figures/figure6.tiff", nmds_plot_combined, width = 5, height = 9, dpi = 600)
+ggsave("./figures/figure6.tiff", nmds_plot_combined, width = 3.5, height = 6, dpi = 600)
 
 nmds_dist_vos_summary <- summary(lm(data = nmds.dis.distance, dis.distance ~ dist))
 nmds_dist_vos_int_summary <- summary(lm(data = nmds.dis.distance, dis.distance ~ dist * hab.cross))
