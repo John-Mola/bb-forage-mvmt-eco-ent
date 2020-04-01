@@ -2,7 +2,7 @@
 
 <img src="./graphical_abstract.png">
 
-This repository is intended to document the code behind the project "Forests do not limit bumble bee foraging movements in a montane meadow complex". As of now this manuscript is in revision at Ecological Entomology. 
+This repository is intended to document the code behind the project "Forests do not limit bumble bee foraging movements in a montane meadow complex". The manuscript is now published in Ecological Entomology, available here: https://onlinelibrary.wiley.com/doi/full/10.1111/een.12868
 
 Anyone who downloads this repository should be able to reconstruct the results of the analysis following COLONY assignment. Should you wish you reconstruct from the beginning, you can download the raw genotype files at [DRYAD DATA REPO]. For most folks, I think this should cover what you're interested in reviewing/referencing for your own future needs. 
 
